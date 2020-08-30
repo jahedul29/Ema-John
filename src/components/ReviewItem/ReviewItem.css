@@ -1,0 +1,15 @@
+.review-product {
+  margin: 1% 5%;
+  border-bottom: 2px solid green;
+  padding: 1%;
+  display: flex;
+}
+
+.reviewProduct-info button {
+  background-color: rgb(194, 15, 15);
+  width: 200px;
+  height: 25px;
+  border-radius: 5px;
+  border: 1px solid black;
+  color: white;
+}
