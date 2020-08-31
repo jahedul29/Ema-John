@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import "./ReviewItem.css";
 
 const ReviewItem = (props) => {
-  console.log(props.product);
-  const { img, name, seller, price, key } = props.product[0];
+  const { img, name, price, key } = props.product;
   const quantity = props.product.quantity;
+  const removeItem = props.removeItem;
 
   return (
     <div className="review-product">
@@ -16,8 +16,6 @@ const ReviewItem = (props) => {
         <h3>
           <Link to={"/product/" + key}>{name}</Link>
         </h3>
-        <p>by {seller}</p>
-        <p>${price}</p>
         <h3>Total Count: {quantity}</h3>
         <h3>
           Total Price:{" "}
@@ -28,7 +26,13 @@ const ReviewItem = (props) => {
             " ) = " +
             Math.round(parseFloat(quantity) * parseFloat(price))}
         </h3>
-        <button>Remove</button>
+        <button
+          onClick={() => {
+            removeItem(key);
+          }}
+        >
+          Remove
+        </button>
       </div>
     </div>
   );

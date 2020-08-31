@@ -1,0 +1,4 @@
+.review-container {
+  border-right: 2px solid green;
+  display: flex;
+}
