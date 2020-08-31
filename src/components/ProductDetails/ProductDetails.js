@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import fakeData from "../../fakeData";
-import Product from "../Product/Product";
 import "./ProductDetails.css";
 
 const ProductDetails = () => {
@@ -9,7 +8,7 @@ const ProductDetails = () => {
 
   const product = fakeData.find((pd) => pd.key === productKey);
 
-  const { name, seller, price, img, stock, key } = product;
+  const { name, seller, price, img, stock } = product;
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div className="product-details">

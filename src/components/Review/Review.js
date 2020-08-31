@@ -49,7 +49,7 @@ const Review = () => {
 
   return (
     <>
-      {cart.length ? (
+      {cart.length || isOrderPlaced ? (
         <div className="review-container">
           <div className="product-container">
             <h1>{heading}</h1>
