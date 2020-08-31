@@ -2,3 +2,9 @@
   border-right: 2px solid green;
   display: flex;
 }
+
+.cart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -45,33 +45,38 @@ const Review = () => {
     placedImage = <img src={ThankYouImage} alt="" />;
   }
 
-  let heading;
-  if (isOrderPlaced) {
-    heading = "Order Placed";
-  } else {
-    heading = "Review Ordered Items";
-  }
+  const heading = isOrderPlaced ? "Order Placed" : "Review Ordered Items";
 
   return (
-    <div className="review-container">
-      <div className="product-container">
-        <h1>{heading}</h1>
+    <>
+      {cart.length ? (
+        <div className="review-container">
+          <div className="product-container">
+            <h1>{heading}</h1>
 
-        {cart.map((pd) => (
-          <ReviewItem
-            key={pd.key}
-            removeItem={removeItem}
-            product={pd}
-          ></ReviewItem>
-        ))}
-        {placedImage}
-      </div>
-      <div className="cart-container">
-        <Cart cart={cart}>
-          <button onClick={placeOrder}>Place Order</button>
-        </Cart>
-      </div>
-    </div>
+            {cart.map((pd) => (
+              <ReviewItem
+                key={pd.key}
+                removeItem={removeItem}
+                product={pd}
+              ></ReviewItem>
+            ))}
+            {placedImage}
+          </div>
+          <div className="cart-container">
+            <Cart cart={cart}>
+              <button onClick={placeOrder}>Place Order</button>
+            </Cart>
+          </div>
+        </div>
+      ) : (
+        <div className="cart-empty">
+          <h1 style={{ color: "red", lineHeight: "20px" }}>Sorry!</h1>
+          <h2 style={{ color: "orange" }}>You have no items in Cart.</h2>
+          <h2 style={{ color: "green" }}>Please order something</h2>
+        </div>
+      )}
+    </>
   );
 };
 
