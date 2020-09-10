@@ -23,6 +23,7 @@ const Product = (props) => {
         </p>
         {props.showAddToCart && (
           <button
+            className="product-button"
             onClick={() => {
               props.handleAddProduct(props.product);
             }}
