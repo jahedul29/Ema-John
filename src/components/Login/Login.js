@@ -56,28 +56,30 @@ function Login() {
     if (isValid) {
       const newUser = { ...user };
       newUser[e.target.name] = e.target.value;
+      newUser.isAuthorized = true;
       setUser(newUser);
     }
   };
 
   const handleSubmit = (e) => {
     if (isNewUser && user.email && user.password) {
-      createUserWithEmailAndPassword(user.name, user.email, user.password).then(
-        (res) => {
-          handleResponse(res, true);
-        }
-      );
+      createUserWithEmailAndPassword(
+        user.name,
+        user.email,
+        user.password
+      ).then((res) => handleResponse(res, true));
     }
 
     if (!isNewUser && user.email && user.password) {
-      signInWithEmailAndPassword(user.email, user.password).then((res) => {
-        handleResponse(res, true);
-      });
+      signInWithEmailAndPassword(user.email, user.password).then((res) =>
+        handleResponse(res, true)
+      );
     }
     e.preventDefault();
   };
 
   const handleResponse = (res, shouldRedirect) => {
+    console.log(res);
     setUser(res);
     setLoggedInUser(res);
     if (shouldRedirect) {
@@ -87,17 +89,10 @@ function Login() {
 
   return (
     <div style={{ textAlign: "center" }}>
-      {user.isAuthorized ? (
+      {isNewUser ? (
         <button onClick={signOut}>Sign Out</button>
       ) : (
         <button onClick={googleSignIn}>Sign In</button>
-      )}
-      {user.isAuthorized && (
-        <div>
-          <h3>Welcome {user.name}</h3>
-          <p>Email: {user.email}</p>
-          <img src={user.photo} alt="" />
-        </div>
       )}
 
       <h1>our own authentication system</h1>
