@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import fakeData from "../../fakeData";
 import "./Shop.css";
 import Product from "../Product/Product";
 import Cart from "../Cart/Cart";
@@ -11,21 +10,36 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Shop = () => {
-  const first10 = fakeData.slice(0, 10);
-
-  const [products, setProducts] = useState(first10);
+  const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    const cartFromDatabase = getDatabaseCart();
-    const productKeys = Object.keys(cartFromDatabase);
-    const cartProducts = productKeys.map((key) => {
-      const cartProductFromKey = fakeData.find((pd) => pd.key === key);
-      cartProductFromKey.quantity = cartFromDatabase[key];
-      return cartProductFromKey;
-    });
-    setCart(cartProducts);
+    fetch("https://ema-john-server-jahed.herokuapp.com/products")
+      .then((res) => res.json())
+      .then((data) => setProducts(data));
   }, []);
+
+  useEffect(() => {
+    if (products.length) {
+      const cartFromDatabase = getDatabaseCart();
+      const productKeys = Object.keys(cartFromDatabase);
+
+      fetch("https://ema-john-server-jahed.herokuapp.com/getCartProducts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(productKeys),
+      })
+        .then((res) => res.json())
+        .then((data) => setCart(data));
+
+      // const cartProducts = productKeys.map((key) => {
+      //   const cartProductFromKey = products.find((pd) => pd.key === key);
+      //   cartProductFromKey.quantity = cartFromDatabase[key];
+      //   return cartProductFromKey;
+      // });
+      // setCart(cartProducts);
+    }
+  }, [products]);
 
   const handleAddProduct = (product) => {
     const sameProduct = cart.find((pd) => pd.key === product.key);

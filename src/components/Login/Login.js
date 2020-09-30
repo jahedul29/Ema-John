@@ -89,11 +89,7 @@ function Login() {
 
   return (
     <div style={{ textAlign: "center" }}>
-      {isNewUser ? (
-        <button onClick={signOut}>Sign Out</button>
-      ) : (
-        <button onClick={googleSignIn}>Sign In</button>
-      )}
+      <button onClick={googleSignIn}> Google Sign In</button>
 
       <h1>our own authentication system</h1>
       <input

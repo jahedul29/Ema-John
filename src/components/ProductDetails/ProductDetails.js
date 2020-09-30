@@ -1,12 +1,18 @@
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
-import fakeData from "../../fakeData";
 import "./ProductDetails.css";
 
 const ProductDetails = () => {
   let { productKey } = useParams();
+  const [product, setProduct] = useState({});
 
-  const product = fakeData.find((pd) => pd.key === productKey);
+  useEffect(() => {
+    fetch("https://ema-john-server-jahed.herokuapp.com/product/" + productKey)
+      .then((res) => res.json())
+      .then((data) => setProduct(data));
+  }, [productKey]);
 
   const { name, seller, price, img, stock } = product;
   return (

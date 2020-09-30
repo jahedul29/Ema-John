@@ -7,7 +7,6 @@ import {
 } from "../../utilities/databaseManager";
 import { useState } from "react";
 import { useEffect } from "react";
-import fakeData from "../../fakeData";
 import ReviewItem from "../ReviewItem/ReviewItem";
 import Cart from "../Cart/Cart";
 import ThankYouImage from "../../images/giphy.gif";
@@ -32,17 +31,26 @@ const Review = () => {
     const cartDataFromDatabase = getDatabaseCart();
     const cartProductKeys = Object.keys(cartDataFromDatabase);
 
-    const cartProduct = cartProductKeys.map((key) => {
-      const product = fakeData.find((pd) => pd.key === key);
-      product.quantity = cartDataFromDatabase[key];
-      return product;
-    });
-    setCart(cartProduct);
+    fetch("https://ema-john-server-jahed.herokuapp.com/getCartProducts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(cartProductKeys),
+    })
+      .then((res) => res.json())
+      .then((data) => setCart(data));
+
+    // const cartProduct = cartProductKeys.map((key) => {
+    //   const product = fakeData.find((pd) => pd.key === key);
+    //   product.quantity = cartDataFromDatabase[key];
+    //   return product;
+    // });
+    // setCart(cartProduct);
   }, []);
 
   let placedImage;
   if (isOrderPlaced) {
     placedImage = <img src={ThankYouImage} alt="" />;
+    processOrder();
   }
 
   const heading = isOrderPlaced ? "Order Placed" : "Review Ordered Items";

@@ -3,7 +3,7 @@ import "./Cart.css";
 
 const Cart = (props) => {
   const totalPrice = props.cart.reduce(
-    (total, pd) => total + pd.price * pd.quantity,
+    (total, pd) => total + pd.price * (pd.quantity || 1),
     0
   );
 
